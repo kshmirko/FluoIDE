@@ -8,13 +8,13 @@ void configdev(CDKSCREEN* cdkscreen, char**fldev, char**spdev) {
 	int selection = 0;
 
 	fluodevice = newCDKEntry(cdkscreen, CENTER, 8,
-		NULL, "Fluorimeter device :",
+		"<C></U></32>Setup device names:<!32>", "Fluorimeter device :",
 		A_NORMAL, '.', vMIXED,
 		40, 0, 256,
 		TRUE, FALSE);
 
 
-	spectrodevice = newCDKEntry(cdkscreen, CENTER, 10,
+	spectrodevice = newCDKEntry(cdkscreen, CENTER, 11,
 		NULL, "Spectrometer device:",
 		A_NORMAL, '.', vMIXED,
 		40, 0, 256,
@@ -46,10 +46,14 @@ void configdev(CDKSCREEN* cdkscreen, char**fldev, char**spdev) {
 		*fldev = copyChar(activateCDKEntry(fluodevice, 0));
 		*spdev = copyChar(activateCDKEntry(spectrodevice, 0));
 		selection = activateCDKButtonbox(buttonWidget,0);
+		if(selection==1) {
+			freeChar(*fldev);
+			freeChar(*spdev);
+		}
 	}
-	while(selection==1);
+	while(selection==1); //EDIT BUTTON
 
-	if(selection==2){
+	if(selection==2){ //CANCEL BUTTON
 		freeChar(*fldev);
 		freeChar(*spdev);
 		*fldev=NULL;
