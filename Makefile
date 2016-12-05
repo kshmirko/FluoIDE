@@ -1,6 +1,6 @@
 CC=gcc
-CCFLAGS=-I /usr/include/cdk
-LDFLAGS=-lcdk -lncurses
+CCFLAGS=-Ofast -I /usr/include/cdk
+LDFLAGS=-Ofast -lcdk -lncurses
 OBJ=fluomenu.o main.o about.o configdev.o
 %.o: %.c
 		$(CC) -c -o $@ $< $(CCFLAGS)

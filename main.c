@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	WINDOW *cursesWin = 0;
 	CDKMENU *menu = 0;
 	const char* mesg[10];
-	char *fldev, *spdev;
+	char *fldev=NULL, *spdev=NULL;
 	
 	//Setup CDK
 	cursesWin = initscr();
@@ -35,8 +35,6 @@ int main(int argc, char* argv[])
 		}else 
 		if (selection==M_CONFIG_DEVICES) {
 			configdev(cdkscreen, &fldev, &spdev);
-			
-			
 		}else
 		if (selection==M_CONFIG_FLUO) {
 			about(cdkscreen);
