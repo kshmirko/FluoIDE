@@ -1,8 +1,24 @@
 #include "configdev.h"
 
+/**
+	Создает диалоговое окно с двумя полями ввода и тремя кнопками.
+	Окно предназначено для установки назуаний системных устройств.
+	**fldev - указатель на строку символов, содержащих название 
+				устройства для флуориметра
+	**fldev - указатель на строку символов, содержащих название 
+				устройства для спектрометра
+
+	после выполнения этой функции значения этих переменных изменятся.
+	Если будет активирована кнока OK, значения этих переменных изменятся 
+	на знеачения полей ввода
+	Если будет активирована кнопка Cancel, то эти указатели будут 
+	указывать на пустую строкуу
+	
+*/
 void configdev(CDKSCREEN* cdkscreen, char**fldev, char**spdev) {
 	CDKENTRY *fluodevice = 0, *spectrodevice = 0;
 	CDKBUTTONBOX* buttonWidget=0;
+	
 	const char *buttons[] = { " Ok ", " Edit ", " Cancel "};
 
 	int selection = 0;
@@ -12,14 +28,14 @@ void configdev(CDKSCREEN* cdkscreen, char**fldev, char**spdev) {
 		A_NORMAL, '.', vMIXED,
 		40, 0, 256,
 		TRUE, FALSE);
-
+	setCDKEntry(fluodevice, *fldev, 0, 256, TRUE);
 
 	spectrodevice = newCDKEntry(cdkscreen, CENTER, 11,
 		NULL, "Spectrometer device:",
 		A_NORMAL, '.', vMIXED,
 		40, 0, 256,
-		TRUE, FALSE);
-	
+		TRUE, FALSE);	
+	setCDKEntry(spectrodevice, *spdev, 0, 256, TRUE);
 
 	buttonWidget = newCDKButtonbox(cdkscreen, getbegx(spectrodevice->win),
 									getbegy(spectrodevice->win)+spectrodevice->boxHeight-1,
@@ -46,9 +62,12 @@ void configdev(CDKSCREEN* cdkscreen, char**fldev, char**spdev) {
 		*fldev = copyChar(activateCDKEntry(fluodevice, 0));
 		*spdev = copyChar(activateCDKEntry(spectrodevice, 0));
 		selection = activateCDKButtonbox(buttonWidget,0);
-		if(selection==1) {
+		
+		if(selection==1) { // If Cancel pressed free memory
 			freeChar(*fldev);
 			freeChar(*spdev);
+			*spdev=NULL;
+			*fldev=NULL;
 		}
 	}
 	while(selection==1); //EDIT BUTTON

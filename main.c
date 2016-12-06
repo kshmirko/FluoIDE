@@ -1,7 +1,10 @@
 #include "fluomenu.h"
 #include "about.h"
 #include "configdev.h"
+#include "configltr11module.h"
+#include "configltr210module.h"
 #include <cdk.h>
+#include <locale.h>
 
 
 int main(int argc, char* argv[])
@@ -15,7 +18,8 @@ int main(int argc, char* argv[])
 	//Setup CDK
 	cursesWin = initscr();
 	cdkscreen = initCDKScreen(cursesWin);
-
+	setlocale(LC_ALL, "");
+	setlocale(LC_NUMERIC, "C");
 	//start cdk color
 	initCDKColor();
 
@@ -40,10 +44,10 @@ int main(int argc, char* argv[])
 			about(cdkscreen);
 		}else
 		if (selection==M_CONFIG_LTR11) {
-			about(cdkscreen);
+			configltr11(cdkscreen);
 		}else
 		if (selection==M_CONFIG_LTR210) {
-			about(cdkscreen);
+			configltr210(cdkscreen);
 		}else
 		if (selection==M_HELP_ABOUT) {
 			about(cdkscreen);
